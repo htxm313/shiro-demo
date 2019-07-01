@@ -6,13 +6,12 @@
 
     <groupId>com.yootk</groupId>
     <artifactId>shiro</artifactId>
-    <packaging>pom</packaging>
     <version>1.0</version>
     <modules>
         <module>shiro-base</module>
+        <module>shiro-web</module>
     </modules>
-
-
+    <packaging>pom</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -57,16 +56,26 @@
         <sentinel.version>1.6.2</sentinel.version>
         <shiro.version>1.4.1</shiro.version>
         <log4j.version>2.12.0</log4j.version>
+        <commons-logging.version>1.2</commons-logging.version>
     </properties>
     <dependencyManagement>
         <dependencies>
-            <!--shiro引入-->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-web</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${commons-logging.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-core</artifactId>
                 <version>${shiro.version}</version>
             </dependency>
-            <!--日志配置-->
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-core</artifactId>
@@ -84,7 +93,7 @@
                 <scope>test</scope>
             </dependency>
 
-            <!--消息组件-->
+
             <dependency>
                 <groupId>org.apache.activemq</groupId>
                 <artifactId>activemq-client</artifactId>
@@ -111,13 +120,11 @@
                 <artifactId>spring-jms</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-            <!--fastjson-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-            <!--dubbo-->
             <dependency>
                 <groupId>com.alibaba.csp</groupId>
                 <artifactId>sentinel-dubbo-adapter</artifactId>
