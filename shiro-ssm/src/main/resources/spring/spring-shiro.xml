@@ -18,6 +18,11 @@
         <property name="failureKeyAttribute" value="errors" />  <!--保存错误信息的属性名称-->
     </bean>
 
+    <bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
+        <!--在登录注销实现之后，将跳转到CommonAction中配置的"/logoutInfo.action"路径-->
+        <property name="redirectUrl" value="/logoutInfo.action" />
+    </bean>
+
     <!-- 4、 在Spring中配置有关Shiro的全部的过滤器的定义，这个名称必须与web.xml文件保持一致-->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
@@ -27,10 +32,12 @@
             <map>
                 <!--authc描述的执行处理路径，此时相当于替换了原始的authc功能-->
                 <entry key="authc" value-ref="formAuthenticationFilter" />
+                <entry key="logout" value-ref="logoutFilter" />
             </map>
         </property>
         <property name="filterChainDefinitions"><!-- 检测路径 -->
             <value>
+                /logout.shiro=logout
                 /login.action=authc  <!--过滤路径-->
                 /pages/**=authc
             </value>

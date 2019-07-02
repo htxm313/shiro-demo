@@ -5,12 +5,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class CommonAction {
+
+    @RequestMapping("/logoutInfo")
+    public String loing(){
+        return "logout_info" ;
+    }
+
     @RequestMapping("/login")
     public String login() {
+
         return "login" ;
     }
     @RequestMapping("/pages/welcome")
     public String welcome() {
+
         return "welcome" ;
     }
 }

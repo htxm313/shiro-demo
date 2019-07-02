@@ -19,7 +19,7 @@
 <shiro:notAuthenticated>
     <h3>您还未登录，显示登录表单！</h3>
 </shiro:notAuthenticated>
-<h1>用户登录成功，欢迎“<shiro:principal/>”光临，系统<a href="logout.servlet">注销</a>！</h1>
+<h1>用户登录成功，欢迎“<shiro:principal/>”光临，系统<a href="logout.shiro">注销</a>！</h1>
 <shiro:hasRole name="member">
     <h3>当前用户拥有“member”的角色！</h3>
 </shiro:hasRole>
