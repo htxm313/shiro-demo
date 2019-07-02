@@ -53,7 +53,7 @@
     </bean>
 
     <!--针对于SecurityManager设置一个处理的拦截器-->
-    <bean id="AuthorizationAttributeSourceAdvisor" class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor" >
+    <bean id="controllerAuthorizationAttributeSourceAdvisor" class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor" >
         <property name="securityManager" ref="securityManager" />
     </bean>
 
