@@ -10,6 +10,7 @@
     <modules>
         <module>shiro-base</module>
         <module>shiro-web</module>
+        <module>shiro-ssm</module>
     </modules>
     <packaging>pom</packaging>
     <properties>

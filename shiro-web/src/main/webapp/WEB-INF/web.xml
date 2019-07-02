@@ -30,4 +30,7 @@
     <welcome-file>login.jsp</welcome-file>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+  <error-page>
+    <location>/login.jsp</location>
+  </error-page>
 </web-app>
