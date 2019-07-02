@@ -45,4 +45,29 @@
         </property>
     </bean>
 
+    <!--如果要想在控制器之中使用代理的控制操作，则必须在代码之中配置有一个AOP，所有的Shiro注解依赖于AOP的模式实现-->
+    <bean id="controllerDefaultAdvisorAutoProxyCreatoz"
+          depends-on="lifecycleBeanPostProcessor"
+          class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"  >
+        <property name="proxyTargetClass" value="true"/>    <!--开启代理操作-->
+    </bean>
+
+    <!--针对于SecurityManager设置一个处理的拦截器-->
+    <bean id="AuthorizationAttributeSourceAdvisor" class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor" >
+        <property name="securityManager" ref="securityManager" />
+    </bean>
+
+    <!--定义一个全局的路径跳转配置-->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings"> <!-- 进行异常映射的处理配置 -->
+            <props>
+                <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">
+                    plugins/errors
+                </prop>
+                <prop key="org.apache.shiro.authz.UnauthorizedException">
+                    plugins/noauthz
+                </prop>
+            </props>
+        </property>
+    </bean>
 </beans>

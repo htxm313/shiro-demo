@@ -28,6 +28,7 @@
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/login.action"/> <!-- 配置登录页 -->
         <property name="successUrl" value="/pages/welcome.action" />   <!-- 配置登录页 -->
+        <property name="unauthorizedUrl" value="/noauthz.action" />
         <property name="filters">
             <map>
                 <!--authc描述的执行处理路径，此时相当于替换了原始的authc功能-->
