@@ -6,9 +6,11 @@
 </head>
 <body>
 <%!
-    public static final String LOGIN_URL = "login_handle.action" ;
+    public static final String LOGIN_URL = "login.action" ;
 %>
-${errors}
+${errors == 'org.apache.shiro.authc.UnknownAccountException'?"未知的账户异常！":""}
+${errors == 'org.apache.shiro.authc.IncorrectCredentialsException'?"错误的用户名或密码！":""}
+${errors == 'org.apache.shiro.authc.LockedAccountException'?"账户已经锁定！":""}
 <form action="<%=LOGIN_URL%>" method="post">
     用户名：<input type="text" name="mid" id="mid"><br>
     密码：<input type="password" name="password" id="password"><br>
