@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 1、Shiro整合处理的时候，Realm是整合业务层（RPC端）的核心处理综合点 -->
+    <bean id="memberReam" class="com.yootk.ssm.realm.MemberRealm"/>
+    <!-- 2、整个的Shiro里面最为重要的就是SecurityManager，这个类之中需要追加realm配置 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="memberReam"/>   <!-- 配置要使用的Realm处理程序 -->
+    </bean>
+    <!-- 3、 在Spring中配置有关Shiro的全部的过滤器的定义，这个名称必须与web.xml文件保持一致-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/login.action"/> <!-- 配置登录页 -->
+        <property name="filterChainDefinitions"><!-- 检测路径 -->
+            <value>
+                /pages/**=authc
+            </value>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            https://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/aop
+            https://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!-- 进行扫描包的设置，如果要设置多个包，则可以使用“,”拆分 -->
+    <context:component-scan base-package="com.yootk.ssm.service,com.yootk.ssm.dao"/>
+    <context:property-placeholder location="classpath:config/*.properties"/>
+    <aop:aspectj-autoproxy/>    <!-- 启用Annotation注解支持 -->
+    <import resource="spring-datasource.xml"/>
+    <import resource="spring-transaction.xml"/>
+    <import resource="spring-mybatis.xml"/>
+    <import resource="spring-shiro.xml"/>
+</beans>

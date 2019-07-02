@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/aop
+            https://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!-- 1、如果要想将MyBatis交由Spring管理，最为重要的一点就是需要配置好mybatis.cfg.xml配置文件 -->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>  <!-- 配置数据源 -->
+        <!-- 设置MyBatis核心配置文件的路径 -->
+        <property name="configLocation" value="classpath:mybatis/mybatis.cfg.xml"/>
+        <property name="mapperLocations" value="classpath:mybatis/mapper/*.xml"/>
+    </bean>
+    <!-- 2、追加一个映射配置转换的处理工具类 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.yootk.ssm.dao"/>    <!-- DAO接口所在包名称 -->
+        <property name="sqlSessionFactoryBeanName" value="sessionFactory"/> <!-- SessionFactory-Bean名称 -->
+    </bean>
+</beans>
