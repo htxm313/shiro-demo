@@ -18,6 +18,6 @@ public class TestRedis {
     }
     @Test
     public void testGet() {
-        System.out.println(this.redisCache.get("hello"));
+        System.out.println(this.redisCache.get("hello")) ;
     }
 }
