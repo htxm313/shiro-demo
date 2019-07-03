@@ -17,6 +17,7 @@
     <import resource="spring-transaction.xml"/>
     <import resource="spring-mybatis.xml"/>
     <import resource="spring-shiro.xml"/>
+    <import resource="spring-shiro-cache.xml" />
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 
     <!--如果要想在控制器之中使用代理的控制操作，则必须在代码之中配置有一个AOP，所有的Shiro注解依赖于AOP的模式实现-->

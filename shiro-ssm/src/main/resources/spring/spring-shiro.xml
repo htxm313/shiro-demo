@@ -33,11 +33,6 @@
         <property name="redirectUrl" value="/logoutInfo.action" />
     </bean>
 
-    <!-- 4、配置要使用的EHCache缓存组件 -->
-    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-        <property name="cacheManagerConfigFile" value="classpath:shiro/ehcache.xml"/>
-    </bean>
-
     <!-- 5、定义Shiro可以使用的session生成管理器，通过此操作进行Shiro-session管理 -->
     <bean id="sessionIdGenerator"
           class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
@@ -46,6 +41,8 @@
           class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
         <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
         <property name="cacheManager" ref="cacheManager"/>
+        <!--针对于Session数据的存储操作，定义有一个专属的缓存名称-->
+        <property name="activeSessionsCacheName" value="shiro-activeSessionCache"/>
     </bean>
     <!-- 7、定义Cookie的存储配置 -->
     <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
