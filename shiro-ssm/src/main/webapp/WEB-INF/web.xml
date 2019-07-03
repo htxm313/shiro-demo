@@ -81,4 +81,13 @@
         <filter-name>shiroFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <servlet>
+        <servlet-name>RandomCode</servlet-name>
+        <servlet-class>com.yootk.ssm.util.web.RandomCode</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RandomCode</servlet-name>
+        <url-pattern>/ImageCode</url-pattern>
+    </servlet-mapping>
 </web-app>

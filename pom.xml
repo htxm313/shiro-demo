@@ -57,10 +57,26 @@
         <sentinel.version>1.6.2</sentinel.version>
         <shiro.version>1.4.1</shiro.version>
         <log4j.version>2.12.0</log4j.version>
+        <commons-collections4.version>4.3</commons-collections4.version>
         <commons-logging.version>1.2</commons-logging.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-quartz</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-ehcache</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
             <!--shiro&spring整合-->
             <dependency>
                 <groupId>org.apache.shiro</groupId>

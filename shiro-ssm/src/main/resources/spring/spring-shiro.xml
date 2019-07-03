@@ -4,18 +4,28 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd">
     <!-- 1、Shiro整合处理的时候，Realm是整合业务层（RPC端）的核心处理综合点 -->
-    <bean id="memberReam" class="com.yootk.ssm.realm.MemberRealm"/>
+    <bean id="memberReam" class="com.yootk.ssm.realm.MemberRealm">
+        <property name="credentialsMatcher">
+            <bean class="com.yootk.ssm.realm.matcher.DefaultCredentialsMathcer" />
+        </property>
+    </bean>
     <!-- 2、整个的Shiro里面最为重要的就是SecurityManager，这个类之中需要追加realm配置 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="memberReam"/>   <!-- 配置要使用的Realm处理程序 -->
+        <property name="cacheManager" ref="cacheManager" />
+        <property name="sessionManager" ref="sessionManager" />
+        <property name="rememberMeManager" ref="cookieRememberMeManager" />
     </bean>
 
-    <!--3、采用内置过滤器的形式实现用户登录控制处理-->
-    <bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
+    <!--3、采用内置过滤器的形式实现用户登录控制处理     这里扫描的路径做了更改。。不一样的地方 ，需要-->
+    <bean id="formAuthenticationFilter" class="com.yootk.ssm.filter.authc.RandomCodeFormAuthenticationFilter">
         <property name="usernameParam" value="mid"/>    <!--用户名参数名称配置-->
         <property name="passwordParam" value="password"/>   <!--密码参数名称配置-->
+        <property name="rememberMeParam" value="rememberme" />  <!--记住我的选项-->
         <property name="loginUrl"  value="/login.action"/>  <!--表单提交路径-->
         <property name="failureKeyAttribute" value="errors" />  <!--保存错误信息的属性名称-->
+        <property name="codeParamName" value="code" />
+        <property name="randParamName" value="rand" />
     </bean>
 
     <bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
@@ -23,7 +33,48 @@
         <property name="redirectUrl" value="/logoutInfo.action" />
     </bean>
 
-    <!-- 4、 在Spring中配置有关Shiro的全部的过滤器的定义，这个名称必须与web.xml文件保持一致-->
+    <!-- 4、配置要使用的EHCache缓存组件 -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:shiro/ehcache.xml"/>
+    </bean>
+
+    <!-- 5、定义Shiro可以使用的session生成管理器，通过此操作进行Shiro-session管理 -->
+    <bean id="sessionIdGenerator"
+          class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
+    <!-- 6、定义一个Session数据操作类的实例，该实例需要通过SessionID生成器维护Session -->
+    <bean id="sessionDAO"
+          class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+        <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
+        <property name="cacheManager" ref="cacheManager"/>
+    </bean>
+    <!-- 7、定义Cookie的存储配置 -->
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <property name="name" value="HappyLee-Session-ID"/> <!-- Cookie属性名称 -->
+    </bean>
+
+    <!-- 8、定义session管理器，实现session的整体配置 -->
+    <bean id="sessionManager"
+          class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionDAO" ref="sessionDAO"/>
+        <property name="sessionIdCookie" ref="sessionIdCookie"/>
+        <property name="globalSessionTimeout" value="1800000"/> <!-- 单位：毫秒，30分钟超时 -->
+        <property name="deleteInvalidSessions" value="true"/><!-- 删除无效session -->
+        <property name="sessionIdCookieEnabled" value="true"/><!-- session存在Cookie中 -->
+    </bean>
+
+    <!-- 9、为RememberMe在客户端的存储配置有一个Cookie的信息 -->
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <property name="name" value="HappyLee-RememberMe"/> <!-- Cookie存储名称 -->
+        <property name="path" value="/"/><!-- Cookie存储路径 -->
+        <property name="maxAge" value="2592000"/><!-- 30天内免登录有效，单位：秒 -->
+    </bean>
+
+    <!-- 10、针对于Cookie中提供的RememberMe的功能定义一个专属的管理器 -->
+    <bean id="cookieRememberMeManager"
+          class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cookie" ref="rememberMeCookie"/>
+    </bean>
+    <!-- 11、 在Spring中配置有关Shiro的全部的过滤器的定义，这个名称必须与web.xml文件保持一致-->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/login.action"/> <!-- 配置登录页 -->
@@ -40,7 +91,7 @@
             <value>
                 /logout.shiro=logout
                 /login.action=authc  <!--过滤路径-->
-                /pages/**=authc
+                /pages/**=user
             </value>
         </property>
     </bean>

@@ -39,13 +39,15 @@ public class MemberRealm extends AuthorizingRealm {
             throw new UnknownAccountException(mid + "账户信息不存在") ;
         }
         String password = new String((char[]) token.getCredentials()) ;
-        if(!member.getPassword().equals(password)) {    //如果密码不同
+        /*if(!member.getPassword().equals(password)) {    //如果密码不同
             throw new IncorrectCredentialsException("错误的用户名或密码") ;
         }
+        //有了密码匹配器，这个就用不到了
+        */
         if(member.getLocked().equals(1)) {  //如果用户是锁定状态
             throw new LockedAccountException(mid + "账户已经别锁定") ;
         }
-        return new SimpleAuthenticationInfo(token.getPrincipal(),token.getCredentials(),this.getName()) ;
+        return new SimpleAuthenticationInfo(token.getPrincipal(),member.getPassword(),this.getName()) ;
 
     }
 }
