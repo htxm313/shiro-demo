@@ -12,7 +12,11 @@
         <property name="authorizationCacheName" value="authorizationCache" />   <!--设置授权管理器名称-->
         <property name="cacheManager" ref="cacheManager" /> <!--设置缓存管理器-->
         <property name="credentialsMatcher">
-            <bean class="com.yootk.ssm.realm.matcher.DefaultCredentialsMatcher"/>
+            <bean class="com.yootk.ssm.realm.matcher.DefaultCredentialsMatcher">
+                <property name="cacheManager" ref="cacheManager" />
+                <property name="max" value="${login.password.retry.max}" />
+                <property name="expire" value="${login.password.retry.lock.time}" />
+            </bean>
         </property>
     </bean>
     <!-- 2、整个的Shiro里面最为重要的就是SecurityManager，这个类之中需要追加realm配置 -->
