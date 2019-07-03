@@ -7,12 +7,20 @@
     <bean id="sessionRedisCache" class="com.yootk.ssm.util.cache.RedisCache">
         <property name="redisConnectionFactory" ref="shiroSessionRedisConnectionFactory"/>  <!--因为本身是bean配置的，不是配置文件配置的，本身就有冲突，不影响-->
     </bean>
+    <bean id="authenticationCache" class="com.yootk.ssm.util.cache.RedisCache">
+        <property name="redisConnectionFactory" ref="shiroAuthenticationRedisConnectionFactory"/>  <!--因为本身是bean配置的，不是配置文件配置的，本身就有冲突，不影响-->
+    </bean>
+    <bean id="authorizationRedisCache" class="com.yootk.ssm.util.cache.RedisCache">
+        <property name="redisConnectionFactory" ref="shiroAuthorizationRedisConnectionFactory"/>  <!--因为本身是bean配置的，不是配置文件配置的，本身就有冲突，不影响-->
+    </bean>
 
     <!--定义一个新的Redis缓存管理器，该缓存管理器设置的时候要设置有若干个RedisCache对象，以及对应的缓存名称-->
     <bean id="cacheManager" class="com.yootk.ssm.util.cache.manager.RedisCacheManager">
         <property name="cacheManagerMap">
             <map>
                 <entry key="shiro-activeSessionCache" value-ref="sessionRedisCache" />
+                <entry key="authenticationCache" value-ref="authenticationCache" />
+                <entry key="authorizationRedisCache" value-ref="authorizationRedisCache" />
             </map>
         </property>
     </bean>

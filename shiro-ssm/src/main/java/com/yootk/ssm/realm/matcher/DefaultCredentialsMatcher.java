@@ -5,7 +5,7 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 
-public class DefaultCredentialsMathcer extends SimpleCredentialsMatcher {
+public class DefaultCredentialsMatcher extends SimpleCredentialsMatcher {
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
         //此处方法主要进行密码的匹配操作，这里面需要接收认证的Token信息

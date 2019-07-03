@@ -5,8 +5,14 @@
             http://www.springframework.org/schema/beans/spring-beans.xsd">
     <!-- 1、Shiro整合处理的时候，Realm是整合业务层（RPC端）的核心处理综合点 -->
     <bean id="memberReam" class="com.yootk.ssm.realm.MemberRealm">
+        <property name="cachingEnabled" value="true"/>  <!--启用缓存-->
+        <property name="authenticationCachingEnabled" value="true" />   <!--启用认证缓存-->
+        <property name="authenticationCacheName" value="authenticationCache" /> <!--设置认证缓存管理器名称-->
+        <property name="authorizationCachingEnabled" value="true" />    <!--启用授权缓存-->
+        <property name="authorizationCacheName" value="authorizationCache" />   <!--设置授权管理器名称-->
+        <property name="cacheManager" ref="cacheManager" /> <!--设置缓存管理器-->
         <property name="credentialsMatcher">
-            <bean class="com.yootk.ssm.realm.matcher.DefaultCredentialsMathcer" />
+            <bean class="com.yootk.ssm.realm.matcher.DefaultCredentialsMatcher"/>
         </property>
     </bean>
     <!-- 2、整个的Shiro里面最为重要的就是SecurityManager，这个类之中需要追加realm配置 -->

@@ -12,21 +12,20 @@ import org.springframework.data.redis.connection.lettuce.LettuceClientConfigurat
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 @PropertySource("classpath:config/redis.properties")
-public class ShiroSessionRedisConfig {
-    @Bean("shiroSessionRedisConfiguration")
+public class ShiroAuthorizationRedisConfig {
+    @Bean("shiroAuthorizationRedisConfiguration")
     public RedisStandaloneConfiguration getRedisConfiguration(
-            @Value("${shiro.session.redis.host}") String hostName ,
-            @Value("${shiro.session.redis.port}") int port,
-            @Value("${shiro.session.redis.auth}") String password,
-            @Value("${shiro.session.redis.database}") int database
+            @Value("${shiro.authorization.redis.host}") String hostName ,
+            @Value("${shiro.authorization.redis.port}") int port,
+            @Value("${shiro.authorization.redis.auth}") String password,
+            @Value("${shiro.authorization.redis.database}") int database
     ) {
+        System.err.println("授权缓存访问测试");
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration() ;
         configuration.setHostName(hostName); // 设置Redis主机名称
         configuration.setPort(port); // 设置Redis的访问端口
@@ -34,12 +33,12 @@ public class ShiroSessionRedisConfig {
         configuration.setDatabase(database); // 设置数据库索引
         return configuration ;
     }
-    @Bean("shiroSessionObjectPoolConfig")
+    @Bean("shiroAuthorizationObjectPoolConfig")
     public GenericObjectPoolConfig getObjectPoolConfig(
-            @Value("${shiro.session.redis.pool.maxTotal}") int maxTotal ,
-            @Value("${shiro.session.redis.pool.maxIdle}") int maxIdle ,
-            @Value("${shiro.session.redis.pool.minIdle}") int minIdle ,
-            @Value("${shiro.session.redis.pool.testOnBorrow}") boolean testOnBorrow
+            @Value("${shiro.authorization.redis.pool.maxTotal}") int maxTotal ,
+            @Value("${shiro.authorization.redis.pool.maxIdle}") int maxIdle ,
+            @Value("${shiro.authorization.redis.pool.minIdle}") int minIdle ,
+            @Value("${shiro.authorization.redis.pool.testOnBorrow}") boolean testOnBorrow
     ) {
         GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig() ;
         poolConfig.setMaxTotal(maxTotal);
@@ -48,26 +47,26 @@ public class ShiroSessionRedisConfig {
         poolConfig.setTestOnBorrow(testOnBorrow);
         return poolConfig ;
     }
-    @Bean("shiroSessionClientConfiguration")
+    @Bean("shiroAuthorizationClientConfiguration")
     public LettuceClientConfiguration getLettuceClientConfiguration(
-            @Autowired GenericObjectPoolConfig shiroSessionObjectPoolConfig
+            @Autowired GenericObjectPoolConfig shiroAuthorizationObjectPoolConfig
     ) { // 创建Lettuce组件的连接池客户端配置对象
-        return LettucePoolingClientConfiguration.builder().poolConfig(shiroSessionObjectPoolConfig).build() ;
+        return LettucePoolingClientConfiguration.builder().poolConfig(shiroAuthorizationObjectPoolConfig).build() ;
     }
-    @Bean("shiroSessionRedisConnectionFactory")
+    @Bean("shiroAuthorizationRedisConnectionFactory")
     public RedisConnectionFactory getConnectionFactory(
-            @Autowired RedisStandaloneConfiguration shiroSessionRedisConfiguration ,
-            @Autowired LettuceClientConfiguration shiroSessionClientConfiguration
+            @Autowired RedisStandaloneConfiguration shiroAuthorizationRedisConfiguration ,
+            @Autowired LettuceClientConfiguration shiroAuthorizationClientConfiguration
     ) {
-        LettuceConnectionFactory connectionFactory = new LettuceConnectionFactory(shiroSessionRedisConfiguration,shiroSessionClientConfiguration) ;
+        LettuceConnectionFactory connectionFactory = new LettuceConnectionFactory(shiroAuthorizationRedisConfiguration,shiroAuthorizationClientConfiguration) ;
         return connectionFactory ;
     }
-    @Bean("shiroSessionRedisTemplate")
+    @Bean("shiroAuthorizationRedisTemplate")
     public RedisTemplate getRedisTempalate(
-            @Autowired RedisConnectionFactory shiroSessionRedisConnectionFactory
+            @Autowired RedisConnectionFactory shiroAuthorizationRedisConnectionFactory
     ) {
         RedisTemplate<Object,Object> redisTemplate = new RedisTemplate<>() ;
-        redisTemplate.setConnectionFactory(shiroSessionRedisConnectionFactory);
+        redisTemplate.setConnectionFactory(shiroAuthorizationRedisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer()); // 数据的key通过字符串存储
         redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer()); // 保存的value为对象
         redisTemplate.setHashKeySerializer(new StringRedisSerializer()); // 数据的key通过字符串存储
