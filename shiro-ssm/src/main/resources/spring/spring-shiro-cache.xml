@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="sessionRedisCache" class="com.yootk.ssm.util.cache.RedisCache">
+        <property name="redisConnectionFactory" ref="shiroSessionRedisConnectionFactory"/>  <!--因为本身是bean配置的，不是配置文件配置的，本身就有冲突，不影响-->
+    </bean>
+</beans>

@@ -10,7 +10,7 @@
             http://www.springframework.org/schema/aop
             https://www.springframework.org/schema/aop/spring-aop.xsd">
     <!-- 进行扫描包的设置，如果要设置多个包，则可以使用“,”拆分 -->
-    <context:component-scan base-package="com.yootk.ssm.service,com.yootk.ssm.dao"/>
+    <context:component-scan base-package="com.yootk.ssm.service,com.yootk.ssm.dao,com.yootk.ssm.config"/>
     <context:property-placeholder location="classpath:config/*.properties"/>
     <aop:aspectj-autoproxy/>    <!-- 启用Annotation注解支持 -->
     <import resource="spring-datasource.xml"/>
