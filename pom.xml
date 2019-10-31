@@ -52,7 +52,7 @@
         <commons-io.version>2.6</commons-io.version>
         <spring-data-redis.version>2.1.9.RELEASE</spring-data-redis.version>
         <junit.version>4.12</junit.version>
-        <netty.version>4.1.36.Final</netty.version>
+        <netty.version>4.1.42.Final</netty.version>
         <curator.version>4.2.0</curator.version>
         <sentinel.version>1.6.2</sentinel.version>
         <shiro.version>1.4.1</shiro.version>
