@@ -47,7 +47,7 @@
         <javax.servlet.jsp-api.version>2.3.3</javax.servlet.jsp-api.version>
         <commons-pool2.version>2.6.2</commons-pool2.version>
         <lettuce.version>5.1.7.RELEASE</lettuce.version>
-        <jackson.version>2.9.9</jackson.version>
+        <jackson.version>2.11.0</jackson.version>
         <commons-fileupload.version>1.4</commons-fileupload.version>
         <commons-io.version>2.6</commons-io.version>
         <spring-data-redis.version>2.1.9.RELEASE</spring-data-redis.version>
