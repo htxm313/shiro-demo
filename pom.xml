@@ -32,7 +32,7 @@
         <fastjson.version>1.2.58</fastjson.version>
         <mybatis.version>3.5.1</mybatis.version>
         <mybatis.spring.version>2.0.1</mybatis.spring.version>
-        <mysql.version>5.1.47</mysql.version>
+        <mysql.version>8.0.16</mysql.version>
         <logback.version>1.2.3</logback.version>
         <org.slf4j.version>1.7.26</org.slf4j.version>
         <activemq.version>5.15.9</activemq.version>
