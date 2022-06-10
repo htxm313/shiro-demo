@@ -26,7 +26,7 @@
         <java.dir>src/main/java</java.dir>   <!-- 定义java父路径 -->
         <!-- 定义所有使用的开发包的版本 -->
         <druid.version>1.1.17</druid.version>
-        <dubbo.version>2.5.10</dubbo.version>
+        <dubbo.version>2.6.12</dubbo.version>
         <zookeeper.version>3.5.5</zookeeper.version>
         <zkclient.version>0.11</zkclient.version>
         <fastjson.version>1.2.58</fastjson.version>
