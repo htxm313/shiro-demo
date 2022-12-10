@@ -40,7 +40,7 @@
         <commons.beanutils.version>1.9.3</commons.beanutils.version>
         <commons.lang3.version>3.6</commons.lang3.version>
         <net.sf.json.version>2.3</net.sf.json.version>
-        <spring.version>5.1.7.RELEASE</spring.version>
+        <spring.version>6.0.0</spring.version>
         <aspectj.version>1.8.12</aspectj.version>
         <jstl.version>1.2</jstl.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
